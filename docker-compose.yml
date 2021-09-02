@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  app:
+    image: node:14.17
+    ports:
+      - 2303:2303
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: sh -c "yarn install && yarn run dev"

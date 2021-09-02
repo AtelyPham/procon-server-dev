@@ -1,0 +1,488 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Procon Admin API Server allows user to\ncreate, start, stop, and watch the Procon matches.\n",
+    "version": "1.0.0",
+    "title": "Procon Admin API",
+    "contact": {
+      "email": "tinpham1412000@gmail.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "procon_user",
+      "description": "Login and Register user to get access token"
+    },
+    {
+      "name": "procon",
+      "description": "Main API entry"
+    }
+  ],
+  "schemes": ["https", "http"],
+  "paths": {
+    "/matches": {
+      "get": {
+        "tags": ["procon"],
+        "summary": "Get the minimal info of all matches",
+        "description": "Get the minimal info of all matches",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MatchesMinimal"
+            }
+          },
+          "403": {
+            "description": "Invalid authorization info!"
+          },
+          "500": {
+            "description": "Sever error! Please contact for developer."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/matches/{matchId}": {
+      "get": {
+        "tags": ["procon"],
+        "summary": "The the detail info of match.",
+        "description": "The the detail info of match with id in the parameter.",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "matchId",
+            "in": "path",
+            "description": "ID of match to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MatchDetailResponse"
+            }
+          },
+          "401": {
+            "description": "Token expired!"
+          },
+          "403": {
+            "description": "Invalid authorization info!"
+          },
+          "404": {
+            "description": "Not found!"
+          },
+          "500": {
+            "description": "Sever error! Please contact for developer."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["procon"],
+        "summary": "Delete match with id",
+        "description": "Delete match with id",
+        "parameters": [
+          {
+            "name": "matchId",
+            "in": "path",
+            "description": "ID of match to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The match deleted!"
+          },
+          "400": {
+            "description": "Match is running!"
+          },
+          "401": {
+            "description": "Token expired!"
+          },
+          "403": {
+            "description": "Invalid authorization info!"
+          },
+          "404": {
+            "description": "Not found!"
+          },
+          "500": {
+            "description": "Sever error! Please contact for developer."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/matches/create": {
+      "post": {
+        "tags": ["procon"],
+        "summary": "Create match",
+        "description": "Create match",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Size of the match! Must be one of [8, 10, 12]",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "turnTime",
+            "in": "query",
+            "description": "Time for each turn in the match (second), must corresponsed to [10, 15, 20]",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "totalTurns",
+            "in": "query",
+            "description": "Number of of turns in the match, must corresponsed to [5, 7, 10]",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "minPoint",
+            "in": "query",
+            "description": "The min point for each cell in the match must between -3 and 5 inclusive",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "maxPoint",
+            "in": "query",
+            "description": "The max point for each cell in the match must between 5 and 15 inclusive",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MatchDetailResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid parameter!"
+          },
+          "500": {
+            "description": "Sever error! Please contact for developer."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/matches/start": {
+      "post": {
+        "tags": ["procon"],
+        "summary": "Start match",
+        "description": "Start match",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The match started!"
+          },
+          "400": {
+            "description": "Bad request!"
+          },
+          "401": {
+            "description": "Token expired! or Invalid token!"
+          },
+          "500": {
+            "description": "Sever error! Please contact for developer."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/matches/stop": {
+      "post": {
+        "tags": ["procon"],
+        "summary": "Stop match",
+        "description": "Stop match",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The match stoped!"
+          },
+          "400": {
+            "description": "Bad request!"
+          },
+          "401": {
+            "description": "Token expired! or Invalid token!"
+          },
+          "500": {
+            "description": "Sever error! Please contact for developer."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["procon_user"],
+        "summary": "Login with username and password",
+        "description": "Login with username and password to get the access token",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "Username must between 4 and 15 alphanumeric or underscore character (inclusive).",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "pw",
+            "in": "query",
+            "description": "Password must between 4 and 15 alphanumeric or underscore character (inclusive).",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ProconUser"
+            }
+          },
+          "400": {
+            "description": "One of the field in query do match the condition."
+          },
+          "403": {
+            "description": "Invalid username or password!."
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "tags": ["procon_user"],
+        "summary": "Register new user",
+        "description": "Register new user in database",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "Username must between 4 and 15 alphanumeric or underscore character (inclusive).",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "pw",
+            "in": "query",
+            "description": "Password must between 4 and 15 alphanumeric or underscore character (inclusive).",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "isAdmin",
+            "in": "query",
+            "description": "isAdmin equals to true allow registed user have permission to add another user to the database.",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully!"
+          },
+          "400": {
+            "description": "One of the field in query do match the condition."
+          },
+          "409": {
+            "description": "Username already existed!."
+          },
+          "500": {
+            "description": "Sever error! Please contact for developer."
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "MatchesMinimal": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/MatchesMinimal_inner"
+      }
+    },
+    "MatchDetail": {
+      "type": "object",
+      "properties": {
+        "matchId": {
+          "type": "string"
+        },
+        "teams": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tiles": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "board": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "agents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MatchDetail_agents"
+          }
+        },
+        "turnTime": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalTurns": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "MatchDetailResponse": {
+      "type": "object",
+      "properties": {
+        "match": {
+          "$ref": "#/definitions/MatchDetail"
+        },
+        "team1": {
+          "$ref": "#/definitions/TeamInfo"
+        },
+        "team2": {
+          "$ref": "#/definitions/TeamInfo"
+        }
+      }
+    },
+    "TeamInfo": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "teamId": {
+          "type": "string"
+        },
+        "tilePoint": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "ProconUser": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        }
+      }
+    },
+    "MatchesMinimal_inner": {
+      "type": "object",
+      "properties": {
+        "matchId": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "numOfAgents": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "turnTime": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalTurns": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "MatchDetail_agents": {
+      "type": "object",
+      "properties": {
+        "agentId": {
+          "type": "string"
+        },
+        "teamId": {
+          "type": "string",
+          "description": "The team agent belong to"
+        },
+        "x": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "y": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}
