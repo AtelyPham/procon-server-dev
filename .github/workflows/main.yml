@@ -23,7 +23,7 @@ jobs:
 
       - shell: bash
         run: |
-          npx tsc && yarn webpack && ls build
+          npx tsc && yarn webpack && cp package.json build && cp yarn.lock build && cp Dockerfile build
 
       - name: Upload build folder
         uses: actions/upload-artifact@v2
@@ -55,7 +55,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./
+          context: ./build
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/procon-server:latest

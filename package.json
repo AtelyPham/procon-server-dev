@@ -8,7 +8,7 @@
     "start": "node dist/src/index",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "test": "mocha --require ts-node/register --watch --watch-files src, tests/**/*.ts",
-    "webpack": "webpack",
+    "tsc:webpack": "tsc && webpack",
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production"
   },
@@ -33,6 +33,7 @@
     "nodemon": "^2.0.12",
     "ts-loader": "^9.2.5",
     "ts-node": "^10.1.0",
+    "tsc": "^2.0.3",
     "typescript": "^4.4.2",
     "webpack": "^5.51.1",
     "webpack-cli": "^4.8.0",
