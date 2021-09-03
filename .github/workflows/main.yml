@@ -1,5 +1,4 @@
 name: CI to Docker Hub, CD to AWS Elastic Beanstalk
-author: Trung-Tin Pham
 
 on:
   push:
