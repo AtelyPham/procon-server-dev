@@ -1,6 +1,8 @@
 FROM node:14.17
 WORKDIR /app
 EXPOSE 2303
-COPY . .
+COPY package*.json .
+COPY yarn.lock .
 RUN yarn install --production
-CMD [ "node", "index.js" ]
+ADD ./build .
+CMD ["node", "build"]
