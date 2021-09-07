@@ -3,13 +3,10 @@
 
 all: ;clean build
 
-build: ;yarn install && \
-npx tsc && \
-yarn webpack  && \
-docker build -t procon-server:latest .
+build: ;yarn tsc:webpack
 
-clean: ;rm -rf build; rm -rf dist; rm -rf node_modules
+clean: ;rm -rf build dist public deploy.zip
 
-run: ;docker run --rm --name procon-server -p2303:2303 -d procon-server:0.0-prod
+run: ;docker run --rm --name be -p 443:433 -d procon-server:0.0
 
 .PHONY: clean build
