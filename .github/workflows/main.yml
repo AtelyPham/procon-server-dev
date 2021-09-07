@@ -25,10 +25,10 @@ jobs:
 
       - name: Create public directory
         shell: bash
-        run: bash ./public.sh
+        run: bash ./public.sh && ls -la
 
       - name: Generate deployment package
-        run: zip -r deploy.zip public
+        run: cd public && zip ../deploy.zip -r * .[^.]* && cd ..
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v18
@@ -37,6 +37,7 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: server
           environment_name: Server-env
+          existing_bucket_name: elasticbeanstalk-us-east-2-272971749925
           version_label: 3
           region: us-east-2
           deployment_package: deploy.zip
