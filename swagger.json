@@ -20,15 +20,24 @@
       "description": "Main API entry"
     }
   ],
-  "schemes": ["https", "http"],
+  "schemes": [
+    "https",
+    "http"
+  ],
   "paths": {
     "/matches": {
       "get": {
-        "tags": ["procon"],
+        "tags": [
+          "procon"
+        ],
         "summary": "Get the minimal info of all matches",
         "description": "Get the minimal info of all matches",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [],
         "responses": {
           "200": {
@@ -53,11 +62,17 @@
     },
     "/matches/{matchId}": {
       "get": {
-        "tags": ["procon"],
+        "tags": [
+          "procon"
+        ],
         "summary": "The the detail info of match.",
         "description": "The the detail info of match with id in the parameter.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "matchId",
@@ -94,7 +109,9 @@
         ]
       },
       "delete": {
-        "tags": ["procon"],
+        "tags": [
+          "procon"
+        ],
         "summary": "Delete match with id",
         "description": "Delete match with id",
         "parameters": [
@@ -135,51 +152,57 @@
     },
     "/matches/create": {
       "post": {
-        "tags": ["procon"],
+        "tags": [
+          "procon"
+        ],
         "summary": "Create match",
-        "description": "Create match",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
+        "description": "Create a match with provided infomation.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "size",
-            "in": "query",
-            "description": "Size of the match! Must be one of [8, 10, 12]",
+            "name": "Options to create match",
+            "in": "body",
             "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "turnTime",
-            "in": "query",
-            "description": "Time for each turn in the match (second), must corresponsed to [10, 15, 20]",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "totalTurns",
-            "in": "query",
-            "description": "Number of of turns in the match, must corresponsed to [5, 7, 10]",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "minPoint",
-            "in": "query",
-            "description": "The min point for each cell in the match must between -3 and 5 inclusive",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "maxPoint",
-            "in": "query",
-            "description": "The max point for each cell in the match must between 5 and 15 inclusive",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
+            "schema": {
+              "type": "object",
+              "required": [
+                "size",
+                "turnTime",
+                "totalTurn"
+              ],
+              "properties": {
+                "size": {
+                  "description": "Size of the match! Must be one of [8, 10, 12]",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "turnTime": {
+                  "description": "Time for each turn in the match (second), must corresponsed to [10, 15, 20]",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "totalTurns": {
+                  "description": "Number of of turns in the match, must corresponsed to [5, 7, 10]",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "minPoint": {
+                  "description": "The min point for each cell in the match must between -3 and 5 inclusive",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "maxPoint": {
+                  "description": "The max point for each cell in the match must between 5 and 15 inclusive",
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -205,7 +228,9 @@
     },
     "/matches/start": {
       "post": {
-        "tags": ["procon"],
+        "tags": [
+          "procon"
+        ],
         "summary": "Start match",
         "description": "Start match",
         "parameters": [],
@@ -232,7 +257,9 @@
     },
     "/matches/stop": {
       "post": {
-        "tags": ["procon"],
+        "tags": [
+          "procon"
+        ],
         "summary": "Stop match",
         "description": "Stop match",
         "parameters": [],
@@ -259,23 +286,33 @@
     },
     "/users/login": {
       "post": {
-        "tags": ["procon_user"],
+        "tags": [
+          "procon_user"
+        ],
         "summary": "Login with username and password",
         "description": "Login with username and password to get the access token",
         "parameters": [
           {
-            "name": "username",
-            "in": "query",
-            "description": "Username must between 4 and 15 alphanumeric or underscore character (inclusive).",
+            "name": "Credential to login",
+            "in": "body",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "pw",
-            "in": "query",
-            "description": "Password must between 4 and 15 alphanumeric or underscore character (inclusive).",
-            "required": true,
-            "type": "string"
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "pw"
+              ],
+              "properties": {
+                "username": {
+                  "description": "Username must between 4 and 15 alphanumeric or underscore character (inclusive).",
+                  "type": "string"
+                },
+                "pw": {
+                  "description": "Password must between 4 and 15 alphanumeric or underscore character (inclusive).",
+                  "type": "string"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -296,30 +333,38 @@
     },
     "/users/register": {
       "post": {
-        "tags": ["procon_user"],
+        "tags": [
+          "procon_user"
+        ],
         "summary": "Register new user",
         "description": "Register new user in database",
         "parameters": [
           {
-            "name": "username",
-            "in": "query",
-            "description": "Username must between 4 and 15 alphanumeric or underscore character (inclusive).",
+            "name": "Info",
+            "description": "Info to create new user",
+            "in": "body",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "pw",
-            "in": "query",
-            "description": "Password must between 4 and 15 alphanumeric or underscore character (inclusive).",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "isAdmin",
-            "in": "query",
-            "description": "isAdmin equals to true allow registed user have permission to add another user to the database.",
-            "required": false,
-            "type": "boolean"
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "pw"
+              ],
+              "properties": {
+                "username": {
+                  "description": "Username must between 4 and 15 alphanumeric or underscore character (inclusive).",
+                  "type": "string"
+                },
+                "pw": {
+                  "description": "Password must between 4 and 15 alphanumeric or underscore character (inclusive).",
+                  "type": "string"
+                },
+                "isAdmin": {
+                  "description": "isAdmin equals to true allow registed user have permission to add another user to the database.",
+                  "type": "boolean"
+                }
+              }
+            }
           }
         ],
         "responses": {

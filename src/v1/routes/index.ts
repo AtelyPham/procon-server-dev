@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express"
 import matchRoute from "./match.route"
 import userRoute from "./user.route"
 import { setup, serve } from "swagger-ui-express"
-import SwaggerDocs from "../../../AtelyPham-Procon-Admin-API-1.0.0-resolved.json"
+import SwaggerDocs from "../../../swagger.json"
 import genResObj from "../helpers/genResObj"
 
 const router = Router()

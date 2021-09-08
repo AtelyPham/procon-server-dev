@@ -38,6 +38,6 @@ jobs:
           application_name: server
           environment_name: Server-env
           existing_bucket_name: elasticbeanstalk-us-east-2-272971749925
-          version_label: 4
+          version_label: 1
           region: us-east-2
           deployment_package: deploy.zip
