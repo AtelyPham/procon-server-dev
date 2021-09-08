@@ -8,6 +8,8 @@
       "email": "tinpham1412000@gmail.com"
     }
   },
+  "host": "procon.trungtinpham.com",
+  "basePath": "/api/v1",
   "tags": [
     {
       "name": "procon_user",
