@@ -12,7 +12,7 @@ router.get("/v1", (req: Request, res: Response) => {
     genResObj(null, {
       version: "1",
       author: "Trung-Tin Pham",
-      description: "API for Procon Server App",
+      description: "API for Procon Server App!!!",
     })
   )
 })
